@@ -241,6 +241,20 @@ async function verifyFirebaseToken(idToken, env) {
 // Determina el rol del usuario autenticado
 async function getRole(email, env, token) {
   if (email === env.ADMIN_EMAIL.toLowerCase()) return 'admin';
+
+  // ╔══════════════════════════════════════════════════════════════╗
+  // ║  ⚠️ MODO DEMO ACTIVADO                                         ║
+  // ║  La línea de abajo hace que CUALQUIER persona autenticada      ║
+  // ║  se convierta en coordinador (puede crear/editar/borrar).     ║
+  // ║                                                                ║
+  // ║  PARA UNA INSTALACIÓN REAL Y SEGURA:                          ║
+  // ║  borra (o comenta con //) la siguiente línea.                 ║
+  // ║  Así solo los correos que el admin agregue a la lista de      ║
+  // ║  coordinadores tendrán permisos.                              ║
+  // ╚══════════════════════════════════════════════════════════════╝
+  return 'coordinador'; // ← BORRA ESTA LÍNEA PARA EL MODO SEGURO
+
+  // eslint-disable-next-line no-unreachable
   const id = email.replace(/\./g, '_');
   const doc = await fsGet(env, token, `coordinadores/${id}`);
   if (doc && doc.fields) return 'coordinador';
@@ -293,17 +307,6 @@ export default {
     // Servir el frontend (archivos estáticos) — manejado por Cloudflare assets
     if (!path.startsWith('/api/')) {
       return env.ASSETS.fetch(request);
-    }
-
-    // Endpoint diagnóstico: confirma si las variables están presentes (sin exponerlas)
-    if (path === '/api/diag' && method === 'GET') {
-      return json({
-        FIREBASE_PROJECT_ID: env.FIREBASE_PROJECT_ID ? 'presente' : 'FALTA',
-        FIREBASE_CLIENT_EMAIL: env.FIREBASE_CLIENT_EMAIL ? 'presente' : 'FALTA',
-        FIREBASE_PRIVATE_KEY: env.FIREBASE_PRIVATE_KEY ? ('presente, longitud ' + env.FIREBASE_PRIVATE_KEY.length) : 'FALTA',
-        ADMIN_EMAIL: env.ADMIN_EMAIL ? 'presente' : 'FALTA',
-        key_empieza: env.FIREBASE_PRIVATE_KEY ? env.FIREBASE_PRIVATE_KEY.slice(0, 30) : '',
-      });
     }
 
     try {
