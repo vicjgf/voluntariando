@@ -35,6 +35,32 @@ El navegador **nunca** toca la base de datos directamente. Todo pasa por el Work
 
 ---
 
+## ⚠️ Esta plantilla viene en MODO DEMO
+
+Para que cualquiera pueda experimentar, esta plantilla viene configurada como **demo abierta**:
+
+- **Sin iniciar sesión** → eres visitante (ves eventos y te inscribes)
+- **Al iniciar sesión** (con cualquier Google o correo) → te conviertes en **coordinador** automáticamente y puedes crear, editar y borrar eventos
+
+Esto es ideal para que la gente pruebe la plataforma sin pedirte permiso. Pero **no es seguro para una instalación real**, porque cualquiera podría modificar los eventos.
+
+### Cómo pasar al modo seguro (al hacer tu instalación real)
+
+En el archivo `src/worker.js`, busca el bloque marcado:
+```
+⚠️ MODO DEMO ACTIVADO
+```
+y **borra la línea**:
+```javascript
+return 'coordinador'; // ← BORRA ESTA LÍNEA PARA EL MODO SEGURO
+```
+
+Con eso, solo los correos que el **administrador** agregue a la lista de coordinadores (desde el panel 👥 Coordinadores) tendrán permisos de edición. El resto serán visitantes.
+
+También puedes borrar el banner "🧪 Modo demostración" de la pantalla de login en `public/index.html` (está marcado con comentarios).
+
+---
+
 ## 🚀 Cómo replicar este proyecto (paso a paso)
 
 Para tener tu propia copia funcionando necesitas 4 cuentas **gratuitas**: Google, GitHub, Firebase (usa tu cuenta Google) y Cloudflare.
