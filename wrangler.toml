@@ -7,6 +7,16 @@ compatibility_date = "2025-01-01"
 directory = "./public"
 binding = "ASSETS"
 
-# Las variables sensibles (FIREBASE_PRIVATE_KEY, etc.) NO van aquí.
-# Se configuran como secrets con: wrangler secret put NOMBRE
-# o en el dashboard de Cloudflare. Ver README.md
+# ╔═══════════════════════════════════════════════════════════════════╗
+# ║  VARIABLES PÚBLICAS                                                ║
+# ║  Van aquí para que SOBREVIVAN a cada deployment.                  ║
+# ║  ⚠️ SI REPLICAS: cambia estos 3 valores por los de TU proyecto.   ║
+# ║                                                                    ║
+# ║  La llave privada (FIREBASE_PRIVATE_KEY) NO va aquí porque es     ║
+# ║  secreta. Esa se pone como Secret en el dashboard de Cloudflare   ║
+# ║  o con: wrangler secret put FIREBASE_PRIVATE_KEY                  ║
+# ╚═══════════════════════════════════════════════════════════════════╝
+[vars]
+FIREBASE_PROJECT_ID = "voluntariando-fd63d"
+FIREBASE_CLIENT_EMAIL = "firebase-adminsdk-fbsvc@voluntariando-fd63d.iam.gserviceaccount.com"
+ADMIN_EMAIL = "vicjgf@gmail.com"
