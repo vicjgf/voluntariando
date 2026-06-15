@@ -1,0 +1,12 @@
+name = "voluntariando"
+main = "src/worker.js"
+compatibility_date = "2025-01-01"
+
+# Servir archivos estáticos (el frontend) desde la carpeta public/
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Las variables sensibles (FIREBASE_PRIVATE_KEY, etc.) NO van aquí.
+# Se configuran como secrets con: wrangler secret put NOMBRE
+# o en el dashboard de Cloudflare. Ver README.md
